@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InsertOneResult } from 'mongodb';
 import { User } from './user.interface';
 import { UserRepository } from './user.repository';
+import { UpdateUserDto } from './UpdateUserDto';
 
 @Injectable()
 export class UserService {
@@ -36,6 +37,14 @@ export class UserService {
         }
     }
 
+    async updateUser(userId: string, updateUserDto: UpdateUserDto): Promise<User> {
+        try {
+            return await this.userRepository.updateUser(userId, updateUserDto);
+        } catch (error) {
+            console.error('Error updating user by ID:', error);
+            throw error;
+        }
+    }
 
 }
 

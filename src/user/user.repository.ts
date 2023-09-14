@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Db, Collection, WithId, InsertOneResult } from 'mongodb';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Db, Collection, WithId, InsertOneResult, ObjectId } from 'mongodb';
 import { User } from './user.interface';
 import { ConvertObjectId } from './handelObject';
+import { UpdateUserDto } from './UpdateUserDto';
 
 @Injectable()
 export class UserRepository {
@@ -26,5 +27,20 @@ export class UserRepository {
         const users: User[] = ConvertObjectId(usersId)
         return users;
     }
+
+    async updateUser(userId: string, updateUserDto: UpdateUserDto): Promise<User> {
+        const filter = { _id: new ObjectId(userId) };
+        const update = { $set: updateUserDto };
+
+        const updatedUser = await this.userCollection.findOneAndUpdate(filter, update);
+
+        if (!updatedUser.value) {
+            throw new NotFoundException(`User with ID ${userId} not found`);
+        }
+
+        const updatedDocument = await this.userCollection.findOne(filter);
+        return updatedDocument as User;
+    }
+
 
 }

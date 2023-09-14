@@ -1,13 +1,20 @@
 
 export interface User {
-  name: string;
+  firstName: string;
   lastName: string;
   age: number;
   mobile: number;
   Dob: string;
   City: string;
-  PastMedicalHistory: boolean;
+  MedicalHistory: boolean;
   Maritalstatus: string;
   Zip: number;
-  AppointmentStatus: string
+  AppointmentStatus: string,
+  AppointmentNumber : string,
+  Weight : number,
+  BloodGroup : string,
+  AllergicSalt : string,
+  MedicalHistoryExplanation : string,
+  medicationExplanation : string,
+  medication : boolean
 }

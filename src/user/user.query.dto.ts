@@ -3,7 +3,7 @@ import { IsOptional, IsString, IsNumber } from '@nestjs/class-validator';
 export class GetUserQueryDto {
   @IsOptional()
   @IsString()
-  name: string;
+  firstName: string;
 
   @IsOptional()
   @IsNumber()
